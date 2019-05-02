@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+</head>
+<body>
+	<div id="root" style="width: 320px; margin: 40px auto; padding: 10px; border-style: dashed; border-width: 1px; box-sizing: border-box;">
+		embedded area
+	</div>
+	<script src="https://cdn.auth0.com/js/lock/11.14/lock.min.js"></script>
+	<script>
+	  var lock = new Auth0Lock('j6OzHpSqs6w91oekbch21R8A4oQaM89B', 'pjpv9011.eu.auth0.com', {
+		container: 'root',
+		auth: {
+		  redirectUrl: 'http://localhost/curso-api-rest/Pr%C3%A1ctica%208/',    // If not specified, defaults to the current page 
+		  responseType: 'token id_token',
+		  params: {
+			scope: 'openid email'                // Learn about scopes: https://auth0.com/docs/scopes
+		  }
+		}
+	  });
+	  lock.show();
+	  this.lock.on("authenticated", function(authResult) {
+		// Use the token in authResult to getUserInfo() and save it if necessary
+		this.getUserInfo(authResult.accessToken, function(error, profile) {
+			if (error) {
+			// Handle error
+			return;
+			}
+			//we recommend not storing access tokens unless absolutely necessary
+			localStorage.accessToken = authResult.accessToken;
+			localStorage.profile = JSON.stringify(profile);
+			location.href="http://localhost/curso-api-rest/Pr%C3%A1ctica%208/welcome.html";
+		});
+	  });
+	</script>
+</body>
+</html>
